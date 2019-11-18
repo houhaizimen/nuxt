@@ -1,21 +1,19 @@
 <template>
   <div>
     <div>
-			<h2>news index vue</h2>
-			<p>{{$route.params.newsId}}</p>
-			<ul>
-				<li>
-				<nuxt-link :to="{name: '/'}">Home</nuxt-link>
-			</li>
-			<li><a href="/news/123">news-1</a></li>
-			<li><nuxt-link to='/news/link'>news-link<news-link></news-link></nuxt-link></li>
-			<li><a href="/news/456">news-3</a></li>
-			</ul>
+		<h2>news index vue</h2>
+		<p>{{$route.params.newsId}}</p>
+		<ul>
+			<li><nuxt-link :to="{name: 'index'}">HOME</nuxt-link></li>
+			<li><nuxt-link :to="{name: 'news-id', params: {title: 'i am news', id: '123'}}">news123</nuxt-link></li>
+			<li><a href='/news/jscheng'>news-2</a></li>
+		</ul>
     </div>
   </div>
 </template>
 <script>
 export default {
+	transition: 'test',
 	data () {
 		return {}
 	}

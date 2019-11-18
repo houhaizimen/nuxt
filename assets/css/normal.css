@@ -1,3 +1,21 @@
+html,p,ul,li{
+   margin: 0;
+   padding: 0;
+}
 html{
-    color: red !important;
+	background-color: rgb(246, 246, 246);
+}
+.page-enter-active, .page-leave-active{
+    transition: opacity 2s;
+}
+.page-enter, .page-leave-active{
+    opacity: 0;
+}
+.test-enter-active, .test-leave-active{
+    transition: all 2s;
+    font-size: 12px;
+}
+.test-enter, .test-leave-active{
+    opacity: 0;
+    font-size: 50px;
 }
