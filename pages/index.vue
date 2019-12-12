@@ -6,7 +6,7 @@
       <div class="list">
        <ul>
           <li><nuxt-link :to="{name: 'index'}">HOME</nuxt-link></li>
-          <li><nuxt-link :to="{name: 'about'}">ABOUT</nuxt-link></li>
+          <li><nuxt-link :to="{name: 'about'}">JOIN OUR</nuxt-link></li>
           <li><nuxt-link :to="{name: 'news', params: {newsId: '1234'}}">NEWS</nuxt-link></li>
           <li><nuxt-link :to="{name: 'asyncData'}">asyncData</nuxt-link></li>
         </ul>
@@ -40,48 +40,7 @@ export default {
 
 <style scoped lang='scss'>
   .bg-img{
-    width: 100%;
-    height: 152px;
     background-image: url('~static/bgImg.svg');
-    display: flex;
-    flex-direction: column;
-    .top{
-      width: 100%;
-      height:56px;
-      background-color: hsla(0,0%,100%,.8);
-      padding: 10px 40px;
-      position: fixed;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 20px;
-      .list{
-        width: 300px;
-        font-size: 16px;
-        ul{
-          list-style: none;
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          li{
-            display: inline;
-            a{
-              text-decoration: none;
-            }
-          }
-        }
-      }
-    }
-    .bottom{
-      height: 96px;
-      line-height: 96px;
-      margin-top:56px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 40px;
-      color: #fff;
-    }
   }
   .content{
     width: 1200px;
