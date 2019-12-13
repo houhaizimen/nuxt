@@ -6,7 +6,7 @@
       <div class="list">
        <ul>
           <li><nuxt-link :to="{name: 'index'}">HOME</nuxt-link></li>
-          <li><nuxt-link :to="{name: 'about'}">JOIN OUR</nuxt-link></li>
+          <li><nuxt-link :to="{name: 'about'}">FOOTERPTINT</nuxt-link></li>
           <li><nuxt-link :to="{name: 'news', params: {newsId: '1234'}}">NEWS</nuxt-link></li>
           <li><nuxt-link :to="{name: 'asyncData'}">asyncData</nuxt-link></li>
         </ul>
