@@ -1,7 +1,15 @@
 <template>
   <div class="echarts">
-    <div class="left"></div>
-    <div class="middle" ref="map"></div>
+    <div class="left">
+      <div class="content top" ref='top10'></div>
+      <div class="content bottom" ref='today'></div>
+    </div>
+    <div class="middle" ref="map">
+      <div class="angle left"></div>
+      <div class="angle right"></div>
+      <div class="angle b-l"></div>
+      <div class="angle b-r"></div>
+    </div>
     <div class="right">
       <div class="kuang" ref="man"></div>
       <div class="kuang" ref="woman"></div>
@@ -484,11 +492,249 @@ export default {
       { value: 345, name: "26-30" },
       { value: 22, name: "30-35" }
     ];
+    this.setTopcity() // left top
+    this.setToday()
     this.setMapChart()
     this.setPieChart("男生年龄分布图", this.$refs.man, data, "/woman.png");
     this.setPieChart("女生年龄分布图", this.$refs.woman, data, "/man.png");
   },
   methods: {
+    setToday () {
+      let mapChart = this.$echarts.init(this.$refs.today)
+      let option = {
+          backgroundColor: '#18163B',
+          grid: {
+              top: '15%',
+              right: '3%',
+              left: '5%',
+              bottom: '12%'
+          },
+          xAxis: [{
+              type: 'category',
+              color: '#59588D',
+              data: ['学员续费率', '试听课转换率', '课程消费率', '课后评分率', '作业完成率', '班级满班率', '排课上课率', '体验课转化率'],
+              axisPointer: {
+                  type: 'line'
+              },
+              axisLine: {
+                  lineStyle: {
+                      color: '#272456'
+                  }
+              },
+              axisLabel: {
+                  margin: 20,
+                  color: '#59588D',
+                  textStyle: {
+                      fontSize: 12
+                  },
+              },
+          }],
+          yAxis: [{
+              min: 0,
+              max: 100,
+              axisLabel: {
+                  formatter: '{value}%',
+                  color: '#59588D',
+              },
+              axisLine: {
+                  show: false
+              },
+              splitLine: {
+                  lineStyle: {
+                      color: '#272456'
+                  }
+              }
+          }],
+          series: [{
+              type: 'bar',
+              data: [100, 90, 10, 90, 90, 20, 56, 89],
+              barWidth: '20px',
+              itemStyle: {
+                  normal: {
+                      color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                          offset: 0,
+                          color: '#41E1D4' // 0% 处的颜色
+                      }, {
+                          offset: 1,
+                          color: '#10A7DB' // 100% 处的颜色
+                      }], false),
+                      barBorderRadius: [30, 30, 0, 0],
+                      shadowColor: 'rgba(0,255,225,1)',
+                      shadowBlur: 4,
+                  }
+              },
+              label: {
+                  normal: {
+                      show: true,
+                      lineHeight: 30,
+                      width: 80,
+                      height: 30,
+                      backgroundColor: '#252453',
+                      borderRadius: 200,
+                      position: ['-8', '-60'],
+                      distance: 1,
+                      formatter: [
+                          '    {d|●}',
+                          ' {a|{c}%}     \n',
+                          '    {b|}'
+                      ].join(''),
+                      rich: {
+                          d: {
+                              color: '#3CDDCF',
+                          },
+                          a: {
+                              color: '#fff',
+                              align: 'center',
+                          },
+                          b: {
+                              width: 1,
+                              height: 30,
+                              borderWidth: 1,
+                              borderColor: '#234e6c',
+                              align: 'left'
+                          },
+                      }
+                  }
+              }
+          }]
+      }
+      mapChart.setOption(option)
+    },
+    setTopcity () {
+      let mapChart = this.$echarts.init(this.$refs.top10)
+      let myColor = ['#eb2100', '#eb3600', '#d0570e', '#d0a00e', '#34da62', '#00e9db', '#00c0e9', '#0096f3', '#33CCFF', '#33FFCC'];
+      let option = {
+          title: {
+            text: '城市排行Top10',
+            textStyle: {
+              color: '#fff',
+              top: 10
+            }
+          },
+          grid: {
+              left: '11%',
+              top: '12%',
+              right: '0%',
+              bottom: '8%',
+              containLabel: true
+          },
+          xAxis: [{
+              show: false,
+          }],
+          yAxis: [{
+              axisTick: 'none',
+              axisLine: 'none',
+              offset: '10',
+              axisLabel: {
+                  textStyle: {
+                      color: '#ffffff',
+                      fontSize: '12',
+                  }
+              },
+              data: ['南昌', '广州', '杭州', '宁夏', '兰州', '南宁', '长沙', '武汉', '合肥', '贵州']
+          }, {
+              axisTick: 'none',
+              axisLine: 'none',
+              axisLabel: {
+                  textStyle: {
+                      color: '#ffffff',
+                      fontSize: '16',
+                  }
+              },
+              data: ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1']
+          }, {
+              name: '分拨延误TOP 10',
+              nameGap: '50',
+              nameTextStyle: {
+                  color: '#ffffff',
+                  fontSize: '16',
+              },
+              axisLine: {
+                  lineStyle: {
+                      color: 'rgba(0,0,0,0)'
+                  }
+              },
+              data: [],
+          }],
+          series: [{ // 内部
+                  name: '条',
+                  type: 'bar',
+                  yAxisIndex: 0,
+                  data: [4, 13, 25, 29, 38, 44, 50, 52, 60, 72],
+                  label: {
+                      normal: {
+                          show: true,
+                          position: 'right',
+                          textStyle: {
+                              color: '#ffffff',
+                              fontSize: '12',
+                          }
+                      }
+                  },
+                  barWidth: 8,
+                  itemStyle: {
+                      normal: {
+                          color: function(params) {
+                              var num = myColor.length;
+                              return myColor[params.dataIndex % num]
+                          },
+                      }
+                  },
+                  z: 2
+              }, {
+                  name: '白框',
+                  type: 'bar',
+                  yAxisIndex: 1,
+                  barGap: '-100%',
+                  data: [99, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5, 99.5],
+                  barWidth: 14,
+                  itemStyle: {
+                      normal: {
+                          color: '#0e2147',
+                          barBorderRadius: 5,
+                      }
+                  },
+                  z: 1
+              }, {
+                  name: '外框',
+                  type: 'bar',
+                  yAxisIndex: 2,
+                  barGap: '-100%',
+                  data: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100],
+                  barWidth: 18,
+                  itemStyle: {
+                      normal: {
+                          color: function(params) {
+                              var num = myColor.length;
+                              return myColor[params.dataIndex % num]
+                          },
+                          barBorderRadius: 5,
+                      }
+                  },
+                  z: 0
+              },
+              {
+                  name: '外圆',
+                  type: 'scatter',
+                  hoverAnimation: false,
+                  data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  yAxisIndex: 2,
+                  symbolSize: 20,
+                  itemStyle: {
+                      normal: {
+                          color: function(params) {
+                              var num = myColor.length;
+                              return myColor[params.dataIndex % num]
+                          },
+                          opacity: 1,
+                      }
+                  },
+                  z: 2
+              }
+          ]
+      }
+      mapChart.setOption(option)
+    },
     // series 数据操作
     optSeries() {
       [
@@ -571,7 +817,6 @@ export default {
               };
             })
           },
-          // 柱状图
           {
             name: item[0] + " Top10",
             type: "lines",
@@ -602,8 +847,26 @@ export default {
 		// 设置地图分配
     setMapChart() {
       let mapChart = this.$echarts.init(this.$refs.map);
-      this.optSeries();
+      this.optSeries()
+      this.series.push(          // 柱状图
+          { // 内部
+            name: '人均分布排行前十城市',
+            type: 'bar',
+            barWidth: 20,
+            cursor: 'pointer',
+            data: [18203, 23489, 29034, 104970, 131744, 630230, 29034, 104970, 131744, 630230],
+            itemStyle: {
+              normal: {
+                color: 'rgb(75,245,242)',
+                borderColor: 'rgb(24,22,43)',
+                barBorderRadius: [0, 5, 5, 0],
+                opacity: '0.8'
+              }
+            }
+          }
+        )
       let option = {
+        // backgroundColor: 'rgb(14,16,55)',
         title: {
           text: "访客地区分布图",
           subtext: "数据纯属虚构",
@@ -628,6 +891,8 @@ export default {
         },
         geo: {
           map: "china",
+          left: '4%',
+          // bottom: '20%',
           label: {
             emphasis: {
               show: true
@@ -644,6 +909,31 @@ export default {
             }
           }
         },
+        // 柱状图位置调整
+        grid: {
+          left: '70%',
+          right: '4%',
+          bottom: '10%',
+          containLabel:true
+        },
+        // 柱状图x轴
+        xAxis: {
+          show: false,
+        },
+        // 柱状图y轴
+        yAxis: [{
+          type: 'category',
+          data: ['南京', '上海', '北京', '常州', '苏州', '南京', '上海', '北京', '常州', '苏州'],
+          splitLine: {
+            show:false
+          },
+          axisLabel: {
+            textStyle: {
+              color: '#fff',
+              fontSize: '12'
+            }
+          }
+        }],
         series: this.series
       };
       mapChart.setOption(option);
@@ -743,14 +1033,28 @@ export default {
   .left {
     width: 300px;
     height: 100%;
-    // background-color: pink;
-    border: 1px solid blue;
+    display: flex;
+    flex-direction:column;
+    padding: 20px;
+    .content{
+      width: 100%;
+      background: linear-gradient(to bottom left, #0c1f82, #090b17);
+      box-sizing: border-box;
+      border: 2px solid rgb(8, 1, 32);
+    }
+    .top{
+      height: 50%;
+    }
+    .bottom{
+      flex:1;
+      margin-top: 20px;
+    }
   }
   .middle {
     width: calc(100% - 600px);
     height: 100%;
-    // background-color: green;
-    border: 1px solid blue;
+    position: relative;
+    border:3px solid rgb(3, 25, 41);
   }
   .right {
     width: 300px;
