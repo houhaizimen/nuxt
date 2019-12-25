@@ -33,6 +33,7 @@ export default {
   */
   plugins: [
     '@/plugins/element-ui',
+    '@/plugins/axios', // 配置axios
     '@/plugins/echarts' // 配置echarts
   ],
   /*
@@ -66,5 +67,12 @@ export default {
     */
     extend (config, ctx) {
     }
-  }
+  },
+  // 配置跨域
+  // publicPath: '/',
+  // devServer: {
+  //   port: 8071,
+  //   open: true,
+  //   proxy: {}
+  // }
 }
