@@ -21,7 +21,15 @@ user
         sql  = 'select count(*) as total from user where age between ? and ? and sex = ?'
         reqArr = [$start, $end, $sex]
     }
-    ctx.body = data
+    let data = await query(sql, reqArr)
+    console.log(data)
+    ctx.body = {
+        code: data.code,
+        data: {
+            value: data.data[0].total,
+            name: `${$start}-${$end}`
+        }
+    }
 })
 .get('/addUser', async(ctx, next) => {
     let $name = ctx.request.query.uname

@@ -14,6 +14,6 @@ routerApp.use('/user', userRoutes.routes(), userRoutes.allowedMethods())
 // 将路由注册到服务器上
 app.use(routerApp.routes()).use(routerApp.allowedMethods())
 
-app.listen(3000, () => {
+app.listen(3002, () => {
     console.log('nuxtDemo is starting at port 3000')
 })

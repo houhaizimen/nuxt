@@ -20,9 +20,11 @@ function query(sql, params=null) {
                     data: '查询失败'
                 })
             } else {
+                let result = JSON.stringify(res)
+                result = JSON.parse(result)
                 resolve({
                     code: 200,
-                    data: res
+                    data: result
                 })
             }
         })
