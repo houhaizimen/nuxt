@@ -18,7 +18,15 @@
   </div>
   <div class="content">
     <div class="left"></div>
-    <div class="right"></div>
+    <div class="right">
+      <div class="top">
+        <img src="~static/avatar.jpg" alt="">
+        <div>jscheng</div>
+        <div>
+          
+        </div>
+      </div>
+    </div>
   </div>
 </div>
   
@@ -57,7 +65,27 @@ export default {
     .right{
       flex: 1;
       height: 100%;
-      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      .top{
+        width: 100%;
+        height: 380px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #eee;
+        padding: 16px;
+        box-sizing: border-box;
+        img{
+          width: 110px;
+          height: 110px;
+        }
+        .cont{
+          flex: 1;
+        }
+      }
     }
   }
 </style>

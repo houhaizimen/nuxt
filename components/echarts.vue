@@ -1141,7 +1141,7 @@ export default {
           sex: val
         };
         let res = await this.$axios.get(
-          constant.baseUrl + "/user/ageCount",
+          constant.baseUrl + "user/ageCount",
           reqData
         );
         if (res.code === 200) {
