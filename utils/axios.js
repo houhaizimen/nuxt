@@ -11,7 +11,7 @@ const vueIns = new Vue()
 if (constant.baseUrl) {
     axiosIns.defaults.baseUrl = constant.baseUrl
 }
-axios.defaults.retry = 1
+axiosIns.defaults.retry = 1
 // 延迟时间
 axiosIns.defaults.timeout = 20000
 axiosIns.defaults.retryDelay = 1000
