@@ -41,7 +41,7 @@
                  v-show='moveShow'></div>
           </div>
           <div></div>
-          <div>jscheng</div>
+          <div>更改头像</div>
           <div @click='checkSign'>签到</div>
         </div>
         <div class="big-avatar"
@@ -54,9 +54,23 @@
       </div>
     </div>
     <!-- 日历表 -->
-    <div class="">
-
+    <div class="calender-cont" v-show='showCalender'>
+      <div class="cal-hang">
+        {{year}}年{{month}}月{{date}}日
+      </div>
+      <!-- 周几 -->
+      <div class="cal-hang">
+        <div v-for='(item, cindex) in weekArr' :key='cindex' class='cal-kuai'>{{item}}</div>
+      </div>
+      <!-- 月份 -->
+      <div class="cal-hang" v-for="(itemArr, arrIndex) in monthArr" :key='arrIndex'>
+        <div v-for='(dateItem, dateIndex) in itemArr' :key='dateIndex' class='cal-kuai' :class="dateItem==date?'bg-green':''" @click='getclickDate(dateItem)'>{{dateItem}}
+        </div>
+      </div>
     </div>
+    <!-- 阴影 -->
+    <!-- <div class='shadow'>
+    </div> -->
   </div>
 </template>
 
@@ -75,12 +89,93 @@ export default {
       pointMove: { // 方块移动的距离
         top: 0,
         left: 0
-      }
+      },
+      showCalender: false,
+      weekArr: ['日', '一', '二', '三', '四', '五', '六'],
+      // 当前月份日期
+      monthArr: [],
+      // 每个月的天数
+      monthDay: [31,28,31,30,31,30,31,31,30,31,30,31],
+      // 当前的年数
+      year: '',
+      // 当前月份
+      month: '',
+      // 当前日
+      date: '',
+      // 当前是周几
+      nowWeek: ''
     }
   },
+  created() {
+    let date = new Date()
+    this.year = date.getFullYear()
+    this.month = date.getMonth() + 1
+    this.date = date.getDate()
+    // 0 代表周日
+    this.nowWeek = date.getDay()
+    this.isLeap()
+    this.setMOnthArr()
+  },
   methods: {
+    // 获取点击的日期
+    getclickDate (date) {
+      this.date = date
+    },
+    // 判断是否为闰年
+    isLeap () {
+      if (this.year%4==0 && this.year % 100 == 0 || this.year % 400 == 0) {
+        this.monthDay[1] = 29
+      }
+    },
+    // 排日历----当前月
+    setMOnthArr () {
+      // 判断本月第一天是周几
+      let oneDay = new Date(`${this.year}, ${this.month}, 01`).getDay()
+      // 判断本月有几周
+      let weekSum = 0
+      // 判断当天是周几
+      /**
+       * 如果当天是周天 判断本月最后一天是不是周六
+       * * */
+      if (oneDay === 0) {
+        weekSum= this.monthDay[this.month-1]%7
+        // 本月最后一天是周六（整数）
+        if (weekSum === 0) {
+          weekSum = this.monthDay[this.month-1]/7
+        } else {
+          // 如果不是 取证加一
+          weekSum= this.monthDay[this.month-1]/7 + 1
+        }
+      } else {
+        // 如果本月第一天不是周日 则减去本周
+        weekSum = (this.monthDay[this.month-1]-(7-oneDay))%7
+        if (weekSum === 0) {
+          weekSum = (this.monthDay[this.month-1]-(7-oneDay))/7 + 1
+        } else {
+          weekSum = parseInt((this.monthDay[this.month-1]-(7-oneDay))/7) + 2
+        }
+      }
+      let sum = 0
+      for (let i =0 ; i < weekSum; i++) {
+        var arr = []
+        for (let j = 0; j < 7; j ++) {
+          if (i ==0 && j < oneDay) {
+            arr[j] = ''
+          } else {
+            if (sum < this.monthDay[this.month-1]) {
+              sum ++
+              arr[j] = sum
+            } else {
+              arr[j] = ''
+            }
+          }
+        }
+        this.monthArr.push(arr)
+      }
+      console.warn(this.monthArr)
+    },
     checkSign () { // 签到
-
+      this.showCalender = !this.showCalender
     },
     enterShow () { // 鼠标进入头像
       this.oSmall = this.$refs.small
@@ -140,9 +235,11 @@ export default {
 .bg-img {
   background-image: url("~static/bgImg.svg");
 }
+// 整个页面
 .index{
   position: relative;
 }
+// 中间整个大框
 .content {
   width: 1200px;
   height: 1000px;
@@ -205,4 +302,73 @@ export default {
     }
   }
 }
+// 日历
+.calender-cont{
+  width: 280px;
+  position: absolute;
+  // bottom:280px;
+  top: 600px;
+  right: 10px;
+  background-color: orange;
+  padding: 6px;
+  padding-top: 0;
+  animation: calender-box .6s;
+  .cal-hang{
+    width: 100%;
+    height: 36px;
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #fff;
+    font-weight: bold;
+    font-size:16px;
+    .cal-kuai{
+      width: 36px;
+      height: 36px;
+      margin-right:2px;
+      background-color: #fff;
+      color: orange;
+      line-height: 36px;
+      text-align: center;
+      font-size: 12px;
+      border-radius: 3px;
+    }
+    .cal-kuai:last-child{
+      margin-right: 0;
+    }
+  }
+}
+.bg-green{
+  background-color: rgb(110, 233, 106) !important;
+}
+// 日历动画
+@keyframes calender-box {
+  0% {
+    top: 0px;
+  }
+  60% {
+    top: 600px;
+  }
+  80% {
+    top: 400px;
+  }
+  100% {
+    top: 600px;
+  }
+}
+// 阴影
+// .shadow{
+//   position: absolute;
+//   top: 905px;
+//   right: -50px;
+//   z-index: -1;
+//   width: 400px;
+//   height: 0;
+//   border-bottom: 40px solid rgba(0, 0, 0, 0.2);
+//   border-left: 90px solid transparent;
+//   border-right: 90px solid transparent;
+//   border-radius: 10px;
+// }
 </style>
