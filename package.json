@@ -31,7 +31,7 @@
     "echarts": "^4.5.0",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "qs": "^6.9.1",
     "sass-loader": "^8.0.0",
     "scss-loader": "0.0.1"
